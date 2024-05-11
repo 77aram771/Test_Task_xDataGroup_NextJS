@@ -1,9 +1,11 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default function home() {
     return (
-        <main>
-            <h1>Hello World</h1>
-        </main>
-    );
+        <>
+            <h1>Hello Home Page</h1>
+            <Link href={"/blog"}>My Blog</Link>
+            <Link href={"/products"}>Products</Link>
+        </>
+    )
 }
