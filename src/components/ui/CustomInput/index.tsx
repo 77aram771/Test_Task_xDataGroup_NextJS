@@ -1,3 +1,4 @@
+import ErrorMessage from "@/components/ui/ErrorMessage";
 import style from "./style.module.scss"
 
 export const CustomInput = ({value, onChange, className, label, type, placeholder, isValid, errorMessage}: {
@@ -24,11 +25,7 @@ export const CustomInput = ({value, onChange, className, label, type, placeholde
                 style={{borderColor: !isValid ? 'red' : 'black'}}
             />
             {!isValid
-                ? (
-                    <div className="w-full p-2 text-sm text-red-800 rounded-lg bg-red-50">
-                        <span className="font-medium">{errorMessage}</span>
-                    </div>
-                )
+                ? <ErrorMessage errorMessage={errorMessage}/>
                 : null
             }
         </div>
