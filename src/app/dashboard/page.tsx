@@ -20,8 +20,8 @@ const Dashboard = () => {
         <Card className={"w-2/4 flex flex-col justify-center items-center"}>
             <div className={"text-4xl my-10"}>Welcome</div>
             <span className={"text-2xl w-full whitespace-pre-wrap my-2"}>login: {userData?.login}</span>
-            <span className={"text-2xl w-full whitespace-pre-wrap my-2"}>accessToken: {userData?.accessToken}</span>
-            <span className={"text-2xl w-full whitespace-pre-wrap my-2"}>refreshToken: {userData?.refreshToken}</span>
+            <span className={"text-2xl w-full whitespace-pre-wrap my-2 break-all"}>accessToken: {userData?.accessToken}</span>
+            <span className={"text-2xl w-full whitespace-pre-wrap my-2 break-all"}>refreshToken: {userData?.refreshToken}</span>
 
             <CustomButton
                 value={"Logout"}
