@@ -3,12 +3,10 @@
 import {useRouter} from 'next/navigation';
 import {Card} from "@/components/ui/Card";
 import {CustomButton} from "@/components/ui/CustomButton";
-// import {getCookie} from 'cookies-next';
+import {userDataContext} from "@/context";
 
 const Dashboard = () => {
-    // const accessToken: any = getCookie("accessToken");
-    // const refreshToken: any = getCookie('refreshToken');
-
+    const {userData} = userDataContext();
     const router = useRouter();
 
     const handleLogout = async () => {
@@ -20,9 +18,10 @@ const Dashboard = () => {
 
     return (
         <Card className={"w-2/4 flex flex-col justify-center items-center"}>
-            <div className={"text-4xl my-10"}>Dashboard</div>
-            {/*<span className={"text-2xl w-full whitespace-pre-wrap my-2"}>accessToken: {accessToken}</span>*/}
-            {/*<span className={"text-2xl w-full whitespace-pre-wrap my-2"}>refreshToken: {refreshToken}</span>*/}
+            <div className={"text-4xl my-10"}>Welcome</div>
+            <span className={"text-2xl w-full whitespace-pre-wrap my-2"}>login: {userData?.login}</span>
+            <span className={"text-2xl w-full whitespace-pre-wrap my-2"}>accessToken: {userData?.accessToken}</span>
+            <span className={"text-2xl w-full whitespace-pre-wrap my-2"}>refreshToken: {userData?.refreshToken}</span>
 
             <CustomButton
                 value={"Logout"}
