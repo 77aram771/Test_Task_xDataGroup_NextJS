@@ -7,7 +7,7 @@ const jwtSecret = new TextEncoder().encode(
     jwtSecretKay,
 );
 
-export async function middleware(request: NextRequest, event: NextFetchEvent) {
+export async function middleware(request: NextRequest, _event: NextFetchEvent) {
     if (request.nextUrl.pathname.startsWith('/dashboard')) {
         const accessToken = request.cookies.get('accessToken');
 
