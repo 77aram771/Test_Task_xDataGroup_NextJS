@@ -1,35 +1,57 @@
 "use client"
+
 import {FormEvent, useState} from "react";
-import {useRouter} from 'next/navigation';
+import {userDataContext} from "@/context";
+import {useRouter} from "next/navigation";
+import {useInputHook} from "@/hooks/useInputHook";
 import {CustomInput} from "@/components/ui/CustomInput";
 import {CustomButton} from "@/components/ui/CustomButton";
-import {useInputHook} from "@/hooks/useInputHook";
+import Loader from "@/components/ui/Loader";
+import ErrorMessage from "@/components/ui/ErrorMessage";
 import {regexLogin, regexPassword} from "@/utils/regex/regex";
 import styles from "./style.module.scss";
 
 export default function Login() {
+    const {handleUserData} = userDataContext();
+
     const router = useRouter();
     const loginInput = useInputHook("");
     const passwordInput = useInputHook("");
 
     const [isValid, setIsValid] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setIsLoading(true)
+        setErrorMessage('');
 
         if (regexLogin.test(loginInput.value) && regexPassword.test(passwordInput.value)) {
-            const response = await fetch('/api/login', {
-                method: 'POST',
+            fetch("/api/login", {
+                method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({login: loginInput.value, password: passwordInput.value}),
             })
+                .then((response) => response.text())
+                .then((result) => {
+                    const parseJson = JSON.parse(result);
+                    setIsLoading(false);
+                    if (parseJson.status === 200) {
+                        handleUserData(parseJson);
+                        router.push('/otp');
 
-            if (response.ok) {
-                router.push('/otp');
-            } else {
-                setIsValid(false);
-            }
+                    } else {
+                        setIsValid(false);
+                    }
+                })
+                .catch((error) => {
+                    setIsLoading(false);
+                    setErrorMessage("error")
+                    console.log(error)
+                })
         } else {
+            setIsLoading(false);
             setIsValid(false);
         }
     }
@@ -43,7 +65,7 @@ export default function Login() {
                 label="Login"
                 type={"text"}
                 isValid={isValid || regexLogin.test(loginInput.value)}
-                errorMessage={"Please enter valid login credentials"}
+                errorMessage={"Please enter valid login"}
             />
             <CustomInput
                 value={passwordInput.value}
@@ -57,9 +79,11 @@ export default function Login() {
                 <CustomButton
                     value={"Login"}
                     type={"submit"}
-                    className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
+                    className="flex flex-row my-2 items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
                 />
             </div>
+            {isLoading && <Loader/>}
+            {errorMessage && <ErrorMessage errorMessage={errorMessage}/>}
         </form>
     )
 }

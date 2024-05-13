@@ -2,7 +2,7 @@ export const CustomButton = ({value, className, type, onClick}: {
     value: string,
     className: string,
     type: "submit" | "reset" | "button" | undefined
-    onClick?: () => void | undefined
+    onClick?: () => Promise<void> | void | undefined
 }) => {
     return (
         <button className={className} type={type} onClick={onClick}>
