@@ -3,7 +3,7 @@ import "./global.scss";
 import {UserDataProvider} from "@/context/userDataContext";
 
 export const metadata = {
-    title: "Test Task",
+    title: "Test Task xDataGroup",
 }
 
 export default function RootLayout({children}: { children: ReactNode }) {

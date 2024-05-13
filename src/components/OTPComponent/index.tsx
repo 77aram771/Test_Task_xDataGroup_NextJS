@@ -1,4 +1,4 @@
-import {CustomButton} from "@/components/ui/CustomButton";
+import CustomButton from "../ui/CustomButton"
 
 export const OTPComponent = ({onSubmit, onClick, handleTextChange, OTP, inputRef, status}: {
     onSubmit: (e: any, otpCode: string[]) => void,

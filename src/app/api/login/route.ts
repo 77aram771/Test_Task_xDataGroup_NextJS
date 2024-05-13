@@ -2,7 +2,6 @@ import {NextRequest, NextResponse} from "next/server";
 import jwt from 'jsonwebtoken';
 import {jwtSecretKay} from "@/utils/constans/jwtSecret";
 
-
 export async function POST(req: NextRequest) {
     const body = await req.json();
 

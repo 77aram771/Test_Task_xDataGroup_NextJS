@@ -1,9 +1,9 @@
 'use client'
 
 import {useRouter} from 'next/navigation';
-import {Card} from "@/components/ui/Card";
-import {CustomButton} from "@/components/ui/CustomButton";
 import {userDataContext} from "@/context";
+import Card from "@/components/ui/Card";
+import CustomButton from "@/components/ui/CustomButton";
 
 const Dashboard = () => {
     const {userData} = userDataContext();

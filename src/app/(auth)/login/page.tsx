@@ -1,13 +1,13 @@
 "use client"
 
-import {FormEvent, useState} from "react";
+import {FormEvent, useCallback, useState} from "react";
 import {userDataContext} from "@/context";
 import {useRouter} from "next/navigation";
 import {useInputHook} from "@/hooks/useInputHook";
-import {CustomInput} from "@/components/ui/CustomInput";
-import {CustomButton} from "@/components/ui/CustomButton";
 import Loader from "@/components/ui/Loader";
 import ErrorMessage from "@/components/ui/ErrorMessage";
+import CustomInput from "@/components/ui/CustomInput";
+import CustomButton from "@/components/ui/CustomButton";
 import {regexLogin, regexPassword} from "@/utils/regex/regex";
 import styles from "./style.module.scss";
 
@@ -22,7 +22,7 @@ export default function Login() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsLoading(true)
         setErrorMessage('');
@@ -54,7 +54,7 @@ export default function Login() {
             setIsLoading(false);
             setIsValid(false);
         }
-    }
+    }, [loginInput.value, passwordInput.value]);
 
     return (
         <form className={styles.container} onSubmit={handleSubmit}>

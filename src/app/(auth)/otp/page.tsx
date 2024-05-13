@@ -1,14 +1,14 @@
 "use client"
 
-import {useRef, useState, FormEvent, useEffect} from 'react';
+import {useRef, useState, FormEvent, useEffect, useCallback} from 'react';
 import {userDataContext} from "@/context";
 import {useRouter} from "next/navigation";
 import {OTPComponent} from "@/components/OTPComponent";
-import {Card} from "@/components/ui/Card";
+import Card from "@/components/ui/Card";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import Loader from "@/components/ui/Loader";
-import styles from "./style.module.scss";
 import {regexOtp} from "@/utils/regex/regex";
+import styles from "./style.module.scss";
 
 export default function OTP() {
     const {userData} = userDataContext();
@@ -59,17 +59,17 @@ export default function OTP() {
                 console.error(error)
             })
             .finally(() => setIsLoading(false))
-    }
+    };
 
-    const handleOTP = async (event: FormEvent<HTMLFormElement>) => {
+    const handleOTP = useCallback( (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsLoading(true)
         setErrorMessage('');
         setGetOTP('');
         handleGenerateOTP();
-    }
+    }, []);
 
-    const handleVerifyOTP = async (event: FormEvent<HTMLFormElement>, otpCode: string[]) => {
+    const handleVerifyOTP = useCallback((event: FormEvent<HTMLFormElement>, otpCode: string[]) => {
         event.preventDefault();
         setIsLoading(true);
         setErrorMessage("");
@@ -99,7 +99,7 @@ export default function OTP() {
                 console.error(error);
             })
             .finally(() => setIsLoading(false))
-    }
+    }, [getOtp]);
 
     return (
         <div className={styles.container}>
